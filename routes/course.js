@@ -29,6 +29,7 @@ var cpupload = upload.fields([{name:'courseposter'},{name:'coursethriller'}]);
 router.post('/createCourse',cpupload,async(req,res,next)=>{
         try {
             const poster = await req.files.courseposter[0].path;
+            console.log(poster)
             const video = await req.files.coursethriller[0].path;
             const course = new Course({
                 Title:req.body.title,
@@ -53,7 +54,7 @@ router.post('/createCourse',cpupload,async(req,res,next)=>{
                })
         } catch (error) {
            res.json({
-               message:error,
+               message:error.message,
                success:false
         })            
         }
@@ -122,4 +123,60 @@ router.get('course/class/:id',async(req,res)=>{
       })
     }
     })
+//LIKE COURSE
+router.put('course/like/:id',async(req,res)=>{
+    try {
+        Course.findByIdAndUpdate(req.params.id,{
+            //this line add the user into the list of users who liked a course
+            $push:{Favourite:req.decoded._id}
+        },{
+            new:true
+        }).exec((err,Output)=>{
+            if(err){
+               res.json({
+                   success:'false',
+                   message:err
+               })
+            }else{
+               res.json({
+                   success:'true',
+                   like:Output,
+                   status:true
+               })
+            }
+        })
+    } catch (error) {
+        res.json({
+            success:'false',
+            message:error
+        })
+    }
+})
+router.put('Course/unlike/:id',async (req,res)=>{
+    try {
+     Course.findByIdAndUpdate(req.params.id,{
+         //pull remove a specific user from the list of user who have liked a course
+         $pull:{Favourite:req.decoded._id}
+     },{
+         new:true
+     }).exec((err,Output)=>{
+         if(err){
+            res.json({
+                success:'false',
+                message:err
+            })
+         }else{
+            res.json({
+                success:'true',
+                like:Output
+            })
+         }
+     })
+    } catch (error) {
+     res.json({
+         success:'false',
+         message:error
+     })
+    }
+ })
 module.exports = router

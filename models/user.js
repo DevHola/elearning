@@ -17,7 +17,8 @@ const UserSchema = Schema({
     },
     NIN:{
         type:String,
-        required:true
+        required:true,
+        maxLength:11
     },
     profile:{
       type:String,

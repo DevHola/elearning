@@ -7,6 +7,7 @@ router.post('/Register', async (req, res) => {
     const user = new User({
       Name: req.body.name,
       Email: req.body.email,
+      NIN:req.body.NIN,
       password: req.body.password
     })
     await user.save(err => {

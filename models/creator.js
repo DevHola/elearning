@@ -14,10 +14,6 @@ const CreatorSchema = Schema({
         type:String,
         required:true
     },
-    NIN:{
-        type:String,
-        required:true
-    },
     profile:{
         type:String,
         required:false
