@@ -23,8 +23,9 @@ const CourseSchema = Schema({
     ref: 'Creator'
  },
  Tags:[{
-        type:String,
-        required:true
+    type: Schema.Types.ObjectId,
+    ref: 'Tag'
+
  }],
  classes:[
      {

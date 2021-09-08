@@ -1,7 +1,9 @@
 const express = require('express')
 const app = express()
 const server = require('http').Server(app)
+const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
+
 const cors = require('cors')
 const mongoose = require('mongoose')
 const morgan = require('morgan')
@@ -10,6 +12,7 @@ const path = require('path')
 
 app.use(morgan('combined'))
 app.use(cors())
+app.use(cookieParser());
 app.use(bodyParser.json({limit:'50mb'}))
 app.use(bodyParser.urlencoded({extended:false,limit:'50mb',parameterLimit:1000000 }))
 dotenv.config({ path: path.join(__dirname, '/.env') })
@@ -21,6 +24,7 @@ const courserouter = require('./routes/course')
 const userrouter = require('./routes/user')
 const creatorrouter = require('./routes/creator')
 const enrollrouter = require('./routes/enrollment')
+
 app.use('/Api', classrouter)
 app.use('/Api', courserouter)
 app.use('/Api', userrouter)

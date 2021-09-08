@@ -3,24 +3,32 @@ const Schema = mongoose.Schema
 const bcrypt = require('bcrypt')
 //USER MODEL FOR AUTHENICATION AND PERSONALIZATION AND COMPUTATION WITH RESPECT TO OBJECT
 const UserSchema = Schema({
-    Name:{
+    name:{
         type:String,
-        required:true
+        required:[true,"Please enter your name"],
+        trim:true
     },
-    Email:{
+    email:{
         type:String,
-        required:true
+        required:[true,"Please enter your email"],
+        trim:true,
+        unique:true
     },
     password:{
         type:String,
-        required:true
+        required:[true,"Please enter your password"],
     },
     NIN:{
         type:String,
-        required:true,
+        required:[true,"Please enter your NIN"],
+        unique:true,
         maxLength:11
     },
-    profile:{
+    avatar:{
+      type:String,
+      required:false
+    },
+    location:{
       type:String,
       required:false
     },
