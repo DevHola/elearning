@@ -6,23 +6,19 @@ const UserSchema = Schema({
     name:{
         type:String,
         required:[true,"Please enter your name"],
+        lowercase:true,
         trim:true
     },
     email:{
         type:String,
         required:[true,"Please enter your email"],
         trim:true,
+        lowercase:true,
         unique:true
     },
     password:{
         type:String,
         required:[true,"Please enter your password"],
-    },
-    NIN:{
-        type:String,
-        required:[true,"Please enter your NIN"],
-        unique:true,
-        maxLength:11
     },
     avatar:{
       type:String,
@@ -36,11 +32,11 @@ const UserSchema = Schema({
       type:String,
       required:false
     },
-    createdAt: {
-        type: Date,
-        default: Date.now
-      }
-})
+    reset:{
+      type:String,
+      default:""
+    }
+},{timeStamp:true})
 //HASH PASSWORD
 UserSchema.pre('save', function (next) {
     const user = this
