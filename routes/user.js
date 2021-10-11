@@ -12,6 +12,7 @@ const {
   resetPasswordValidator
 } = require('../helpers/valid')
 const { errorHandler } = require('../helpers/dbErrorHandling');
+const auth = require('../middleware/auth')
 
 
 router.post('/Register',  validSign, async (req, res) => {
@@ -159,7 +160,7 @@ router.post('/user/resetPassword',resetPasswordValidator,async(req,res)=>{
 
 })
 //GET USER INFORMATION
-router.get('/user',async(req,res)=>{
+router.get('/user',auth,async(req,res)=>{
   try {
     const user = await User.findById(req.user.id).select('-password')
     res.json({
