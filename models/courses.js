@@ -27,12 +27,11 @@ const CourseSchema = Schema({
     ref: 'Tag'
 
  }],*/
- classes:[
+ classes:
      {
          type:Schema.Types.ObjectId,
          ref: 'class'
-     }
- ],
+     },
  Participants:{
         type:Schema.Types.ObjectId,
         ref:'EnrolledIn'
