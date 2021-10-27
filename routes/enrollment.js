@@ -8,6 +8,7 @@ router.post('/ENROLL',async (req,res)=>{
     const enrollment = new Enrollment({
         user:req.body.user,
         course:req.body.course,
+        classes:req.body.class,
         Progress:req.body.Completion || 0,
         lastupdated:new Date()
     })
