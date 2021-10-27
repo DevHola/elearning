@@ -22,11 +22,11 @@ const CourseSchema = Schema({
     type: Schema.Types.ObjectId,
     ref: 'Creator'
  },
- Tags:[{
+/* Tags:[{
     type: Schema.Types.ObjectId,
     ref: 'Tag'
 
- }],
+ }],*/
  classes:[
      {
          type:Schema.Types.ObjectId,

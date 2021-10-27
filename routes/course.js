@@ -36,8 +36,8 @@ router.post('/createCourse',cpupload,async(req,res,next)=>{
                 Description:req.body.desc,
                 ImageCaption:poster,
                 VideoThriller:video,
-                Creator:req.body.creator,
-                Tags:req.body.tags,
+                Creator:req.body.creator
+              //  Tags:req.body.tags,
                })
                console.log(course);
                await course.save(async function(err){
