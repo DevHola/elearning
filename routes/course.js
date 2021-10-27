@@ -62,7 +62,7 @@ router.post('/createCourse',cpupload,async(req,res,next)=>{
 //Get ALL COURSES
 router.get('/courses',async(req,res)=>{
     try {
-        const courses = await Course.find().populate('Participants').exec();
+        const courses = await Course.find().populate('classes').exec();
          res.status(200).json({
                 message:'success',
                 courses:courses
