@@ -4,6 +4,7 @@ const multer = require('multer')
 const Class = require('../models/class')
 const Course = require('../models/courses')
 const Creator = require('../models/creator')
+const auth = require('../middleware/auth')
 const storage = multer.diskStorage({
     destination: function (req, file, cb){
         if(file.fieldname === "coursethriller"){
@@ -29,7 +30,6 @@ var cpupload = upload.fields([{name:'courseposter'},{name:'coursethriller'}]);
 router.post('/createCourse',cpupload,async(req,res,next)=>{
         try {
             const poster = await req.files.courseposter[0].path;
-            console.log(poster)
             const video = await req.files.coursethriller[0].path;
             const course = new Course({
                 Title:req.body.title,
@@ -62,7 +62,7 @@ router.post('/createCourse',cpupload,async(req,res,next)=>{
 //Get ALL COURSES
 router.get('/courses',async(req,res)=>{
     try {
-        const courses = await Course.find()
+        const courses = await Course.find().populate('Participants').exec();
          res.status(200).json({
                 message:'success',
                 courses:courses
@@ -178,5 +178,8 @@ router.put('Course/unlike/:id',async (req,res)=>{
          message:error
      })
     }
+ })
+ router.get('/user/enroll',auth,async (req,res)=>{
+     const UserEnrollCourses = await Course.find({Participants:req.user.id});
  })
 module.exports = router

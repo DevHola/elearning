@@ -8,7 +8,7 @@ router.post('/ENROLL',async (req,res)=>{
     const enrollment = new Enrollment({
         user:req.body.user,
         course:req.body.course,
-        Completion:req.body.Completion || 0,
+        Progress:req.body.Completion || 0,
         lastupdated:new Date()
     })
     await enrollment.save(async function(error){

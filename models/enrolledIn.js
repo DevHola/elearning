@@ -9,7 +9,13 @@ const EnrolledInSchema = Schema({
         type:Schema.Types.ObjectId,
         ref:'courses'
     },
-    Completion:{
+    classes:[
+        {
+            type:Schema.Types.ObjectId,
+            ref: 'class'
+        }
+    ],
+    Progress:{
         type:Number,
         default: 0
     },
