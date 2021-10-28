@@ -17,7 +17,7 @@ const ClassSchema = Schema({
          type:String,
          required:true
     },
-    course:{
+    parent:{
         type: Schema.Types.ObjectId,
         ref: 'courses'
 

@@ -34,15 +34,16 @@ router.post('/create/class',cpupload,async(req,res,next)=>{
             Description:req.body.desc,
             classVideo :video,
             classNote  :note,
-            course     :req.body.course
+            parent     :req.body.course
         })
+        console.log(classContent)
            await classContent.save(async function(err){
                if(err){
                    res.json({
                        message:err
                    })
                }
-            Course.update({_id:classContent.course},{$push:{classes:classContent._id}}).exec();
+            Course.update({_id:classContent.parent},{$push:{classes:classContent._id}}).exec();
            })
            res.status(200).json({
                message:'success',
@@ -87,17 +88,7 @@ router.get('/classes/:id',async(req,res)=>{
 router.get('/progress-score/:id',async(req,res)=>{
     try {
         const query = await Class.find({course:req.params.id});
-        query.count(function(err,count){
-            if(err) return res.status(403).json({message:err.message})
-            else {
-                const midvalue = count/100;
-                const percent = midvalue * 100;
-                console.log(percent)
-                res.status(200).json({
-                    percent:percent
-                })
-            }            
-        })
+        console.log(query)
     } catch (error) {
         
     }
