@@ -85,12 +85,20 @@ router.get('/classes/:id',async(req,res)=>{
     }
 
 })
+//calculation progress-score accurate
 router.get('/progress-score/:id',async(req,res)=>{
     try {
-        const query = await Class.find({course:req.params.id});
-        console.log(query)
+        const query = await Class.find({parent:req.params.id}).count().exec();
+                console.log(query)         
+                const stepone = 100/query;
+                res.status(200).json({
+                    score:stepone
+                })
+           
     } catch (error) {
-        
+        res.json({
+            error:error.message
+        })
     }
 })
 module.exports = router;
