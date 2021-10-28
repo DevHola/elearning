@@ -84,4 +84,22 @@ router.get('/classes/:id',async(req,res)=>{
     }
 
 })
+router.get('/progress-score/:id',async(req,res)=>{
+    try {
+        const query = await Class.find({course:req.params.id});
+        query.count(function(err,count){
+            if(err) return res.status(403).json({message:err.message})
+            else {
+                const midvalue = count/100;
+                const percent = midvalue * 100;
+                console.log(percent)
+                res.status(200).json({
+                    percent:percent
+                })
+            }            
+        })
+    } catch (error) {
+        
+    }
+})
 module.exports = router;
