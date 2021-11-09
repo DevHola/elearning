@@ -5,6 +5,7 @@ const Class = require('../models/class')
 const Course = require('../models/courses')
 const Creator = require('../models/creator')
 const auth = require('../middleware/auth')
+const Enroll = require('../models/enrolledIn')
 const storage = multer.diskStorage({
     destination: function (req, file, cb){
         if(file.fieldname === "coursethriller"){
@@ -67,6 +68,27 @@ router.get('/courses',async(req,res)=>{
                 message:'success',
                 courses:courses
             })
+        
+    } catch (error) {
+        res.json({
+            message:error
+        })
+    }
+})
+// user specific courses
+router.get('/user/courses',auth,async(req,res)=>{
+    try {
+       const list =[]
+       const userenroll = await Enroll.find({user:req.user.id}).select('course')
+       console.log(userenroll)
+       //GOT VALUES
+       for (let i = 0; i < userenroll.length; i++) {
+        list.push(userenroll[i].course)
+        }
+        const usercourse = await Course.find({_id:list}).exec()
+        res.json({
+            courses:usercourse
+        })
         
     } catch (error) {
         res.json({
