@@ -86,7 +86,7 @@ router.get('/user/courses',auth,async(req,res)=>{
         list.push(userenroll[i].course)
         }
         const usercourse = await Course.find({_id:list}).exec()
-        res.json({
+        res.status(200).json({
             courses:usercourse
         })
         
