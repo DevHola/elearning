@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Enrollment = require('../models/enrolledIn')
 const Course = require('../models/courses')
+const auth = require('../middleware/auth')
 //ENROLLMENT
 router.post('/ENROLL',async (req,res)=>{
   try {
@@ -89,6 +90,34 @@ router.delete('/enroll/delete/:id',async(req,res)=>{
     } catch (error) {
         res.json({
             message:error
+        })
+    }
+})
+//
+router.get('/user_enroll_details',auth,async(req,res)=>{
+    try {
+        const user_enroll_detail = await Enrollment.find({user:req.user.id}).where('Progress').gte(0).count()
+        res.status(200).json({
+            EnrollCourses:user_enroll_detail
+        })
+        //console.log(user_enroll_detail)
+    } catch (error) {
+        res.json({
+            error:error
+        })
+    }
+})
+//
+router.get('/user_enroll_completed_details',auth,async(req,res)=>{
+    try {
+        const user_enroll_completed_detail = await Enrollment.find({user:req.user.id}).where('Progress').equals(100).count()
+        res.status(200).json({
+            EnrollCourses:user_enroll_completed_detail
+        })
+        //console.log(user_enroll_detail)
+    } catch (error) {
+        res.json({
+            error:error
         })
     }
 })
